@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+      - name: todo-app
+        image: your-todo-app-image:latest
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://todo_user:password@postgres-service:5432/todo_db"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-service
+spec:
+  selector:
+    app: todo
+  ports:
+    - protocol: TCP
+      port: 8080
