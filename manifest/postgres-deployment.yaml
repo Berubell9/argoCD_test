@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres  # ใช้ app: postgres
     spec:
       containers:
       - name: postgres
@@ -33,4 +33,4 @@ spec:
   ports:
     - port: 5432
   selector:
-    app: postgres
+    app: postgres  # ใช้ app: postgres ตรงกับ label ของ Deployment
