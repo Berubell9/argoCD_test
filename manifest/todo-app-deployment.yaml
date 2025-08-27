@@ -14,14 +14,10 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: jhipster/todo:latest  # ใช้ Docker image ที่เชื่อมต่อกับ PostgreSQL
+        image: prologic/todo:latest # ใช้ Docker image ที่เชื่อมต่อกับ PostgreSQL
         env:
-        - name: SPRING_DATASOURCE_URL
-          value: "jdbc:postgresql://postgres-service:5432/todo_db"  # เชื่อมต่อกับ PostgreSQL
-        - name: SPRING_DATASOURCE_USERNAME
-          value: "todo_user"
-        - name: SPRING_DATASOURCE_PASSWORD
-          value: "password"
+        - name: DATABASE_URL
+          value: "postgresql://todo_user:password@postgres-service:5432/todo_db"  # เชื่อมต่อกับ PostgreSQL
         ports:
         - containerPort: 8080
 ---
