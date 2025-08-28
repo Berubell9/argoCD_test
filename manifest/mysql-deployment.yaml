@@ -10,7 +10,7 @@ spec:
       nodePort: 30006
   selector:
     app: wordpress
-    tier: mysql
+    tier: mysql 
   type: NodePort
 ---
 apiVersion: v1
