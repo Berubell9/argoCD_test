@@ -15,6 +15,7 @@ spec:
       containers:
       - name: todo-app
         image: prologic/todo:latest # ใช้ Docker image ที่เชื่อมต่อกับ PostgreSQL
+        imagePullPolicy: Always
         env:
         - name: DATABASE_URL
           value: "postgresql://todo_user:password@postgres-service:5432/todo_db"  # เชื่อมต่อกับ PostgreSQL
