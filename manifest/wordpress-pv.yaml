@@ -5,8 +5,9 @@ metadata:
 spec:
   capacity:
     storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
+  volumeMode: Filesystem
+  accessModes: [ "ReadWriteOnce" ]
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: /mnt/data/wordpress
 ---
@@ -15,8 +16,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: wordpress-pvc
 spec:
-  accessModes:
-    - ReadWriteOnce
+  accessModes: [ "ReadWriteOnce" ]
   resources:
     requests:
       storage: 10Gi
+  volumeName: wordpress-pv

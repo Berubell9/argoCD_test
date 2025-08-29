@@ -5,28 +5,23 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: wordpress
+    matchLabels: { app: wordpress }
   template:
     metadata:
-      labels:
-        app: wordpress
+      labels: { app: wordpress }
     spec:
       containers:
         - name: wordpress
-          image: wordpress:latest
+          image: wordpress:6.2.1-apache
           env:
             - name: WORDPRESS_DB_HOST
               value: mysql-service:3306
             - name: WORDPRESS_DB_NAME
-              value: "wordpress"
+              value: wordpress
             - name: WORDPRESS_DB_USER
-              value: "wordpress"
+              value: wordpress
             - name: WORDPRESS_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_ROOT_PASSWORD
+              valueFrom: { secretKeyRef: { name: mysql-secret, key: MYSQL_PASSWORD } }
           ports:
             - containerPort: 80
           volumeMounts:
@@ -34,17 +29,16 @@ spec:
               mountPath: /var/www/html
       volumes:
         - name: wordpress-storage
-          persistentVolumeClaim:
-            claimName: wordpress-pvc
+          persistentVolumeClaim: { claimName: wordpress-pvc }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: wordpress-service
 spec:
+  type: NodePort
+  selector: { app: wordpress }
   ports:
     - port: 80
-      nodePort: 30080  
-  selector:
-    app: wordpress
-  type: NodePort 
+      targetPort: 80
+      nodePort: 30080
